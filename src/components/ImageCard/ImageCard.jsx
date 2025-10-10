@@ -6,7 +6,7 @@ export default function ImageCard() {
       <img
         src="/img/hero.jpg"
         alt="Smiling student"
-        srcset="/src/img/hero.jpg 1x, /src/img/hero@2x.jpg 2x"
+        srcSet="/src/img/hero.jpg 1x, /src/img/hero@2x.jpg 2x"
       />
     </div>
   );

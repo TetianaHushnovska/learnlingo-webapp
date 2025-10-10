@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import css from "./Header.module.css";
 
-export default function Header() {
+export default function Header({ onRegisterClick }) {
   return (
     <header className={css.header}>
       <Link to="/" className={css.logo}>
@@ -30,7 +30,11 @@ export default function Header() {
           Log In
         </button>
 
-        <button type="button" className={css.authRegist}>
+        <button
+          type="button"
+          className={css.authRegist}
+          onClick={onRegisterClick}
+        >
           Registration
         </button>
       </div>

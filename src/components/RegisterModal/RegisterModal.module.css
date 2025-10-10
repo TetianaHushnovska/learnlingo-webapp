@@ -1,0 +1,106 @@
+.backdrop {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.4);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+}
+
+.modal {
+    width: 566px;
+    height: 600px;
+    background: #fff;
+    border-radius: 20px;
+    padding: 64px;
+    position: relative;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+}
+
+.modalBtn{
+    width: 32px;
+    height: 32px;
+    color: #121417;
+    position: absolute;
+    top: 20px;
+    right: 20px;
+}
+
+.icon{
+    width: 16px;
+    height: 16px;
+    fill: currentColor;
+    stroke: currentColor;
+}
+
+.modalTitle{
+    font-size: 40px;
+    font-weight: 500;
+    line-height: 48px;
+    letter-spacing: -0.02em;
+    margin-bottom: 20px;
+}
+
+.modalSubtitle{
+    line-height: 22px;
+    opacity: 80%;
+    margin-bottom: 40px;
+}
+
+.form{
+    width: 436px;
+    height: 198px;
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+}
+
+.formInput{
+    width: 100%;
+    height: 54px;
+    outline: none;
+    border: 1px solid rgba(18, 20, 23, 0.1);
+    border-radius: 12px;
+    padding: 16px 18px;
+    line-height: 22px;
+}
+
+.formInput:placeholder-shown{
+    color: #121417;
+}
+
+.error{
+    font-size: 10px;
+    color: rgb(247, 86, 86);
+    padding-left: 15px;
+    margin-top: 2px;
+}
+
+.formBtn{
+    width: 438px;
+    height: 60px;
+    background-color: #9FBAAE;
+    line-height: 60px;
+    border-radius: 12px;
+    font-size: 18px;
+    font-weight: 700;
+    transition: background-color 0.3s ease-in-out;
+}
+
+.formBtn:hover{
+    background-color: #CBDED3;
+}
+
+.pwdWraper{
+    position: relative;
+}
+
+.showIcon{
+    width: 20px;
+    height: 20px;
+    color: #121417;
+    position: absolute;
+    right: 18px;
+    top: 20px;
+}

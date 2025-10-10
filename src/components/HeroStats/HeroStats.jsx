@@ -21,7 +21,7 @@ export default function HeroStats() {
           fill="none"
           stroke="#9FBAAE"
           strokeWidth="1.5"
-          strokeDasharray="15 15" /* довжина штриха + відстань */
+          strokeDasharray="15 15"
         />
       </svg>
 
