@@ -50,15 +50,15 @@
 }
 
 .auth{
-    width: 255px;
+    min-width: 255px;
     height: 48px;
     display: flex;
-    justify-content: space-between;
+    gap: 16px;
     align-items: center;
 }
 
 .authLogin{
-    width: 73px;
+    min-width: 73px;
     display: flex;
     flex-direction: row;
     gap: 8px;

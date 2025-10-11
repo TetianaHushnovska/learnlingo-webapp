@@ -10,7 +10,7 @@
 
 .modal {
     width: 566px;
-    height: 600px;
+    height: 506px;
     background: #fff;
     border-radius: 20px;
     padding: 64px;
@@ -18,7 +18,7 @@
     box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
 }
 
-.modalBtn{
+.modalBtn {
     width: 32px;
     height: 32px;
     color: #121417;
@@ -27,14 +27,14 @@
     right: 20px;
 }
 
-.icon{
+.icon {
     width: 16px;
     height: 16px;
     fill: currentColor;
     stroke: currentColor;
 }
 
-.modalTitle{
+.modalTitle {
     font-size: 40px;
     font-weight: 500;
     line-height: 48px;
@@ -42,13 +42,13 @@
     margin-bottom: 20px;
 }
 
-.modalSubtitle{
+.modalSubtitle {
     line-height: 22px;
     opacity: 80%;
     margin-bottom: 40px;
 }
 
-.form{
+.form {
     width: 436px;
     height: 198px;
     display: flex;
@@ -56,7 +56,7 @@
     gap: 18px;
 }
 
-.formInput{
+.formInput {
     width: 100%;
     height: 54px;
     outline: none;
@@ -66,18 +66,18 @@
     line-height: 22px;
 }
 
-.formInput:placeholder-shown{
+.formInput:placeholder-shown {
     color: #121417;
 }
 
-.error{
+.error {
     font-size: 10px;
     color: rgb(247, 86, 86);
     padding-left: 15px;
     margin-top: 2px;
 }
 
-.formBtn{
+.formBtn {
     width: 438px;
     height: 60px;
     background-color: #9FBAAE;
@@ -85,19 +85,19 @@
     border-radius: 12px;
     font-size: 18px;
     font-weight: 700;
-    margin-top: 22px;
     transition: background-color 0.3s ease-in-out;
+    margin-top: 22px;
 }
 
-.formBtn:hover{
+.formBtn:hover {
     background-color: #CBDED3;
 }
 
-.pwdWraper{
+.pwdWraper {
     position: relative;
 }
 
-.showIcon{
+.showIcon {
     width: 20px;
     height: 20px;
     color: #121417;

@@ -1,24 +1,22 @@
 import { useDispatch } from "react-redux";
-import css from "./RegisterModal.module.css";
+import css from "./LoginModal.module.css";
 import * as yup from "yup";
-import { registerUser } from "../../redux/auth/operations";
-import { yupResolver } from "@hookform/resolvers/yup";
-import { useForm } from "react-hook-form";
 import { useEffect, useState } from "react";
+import { useForm } from "react-hook-form";
+import { yupResolver } from "@hookform/resolvers/yup";
+import { loginUser } from "../../redux/auth/operations";
 
 const schema = yup.object({
-  name: yup.string().required("Name is required"),
-  email: yup.string().email("Invalid email").required("Email is required"),
+  email: yup.string().email().required("Email is required"),
   password: yup
     .string()
     .min(6, "At least 6 characters")
     .required("Password is required"),
 });
 
-export default function RegisterModal({ onClose }) {
-  const dispatch = useDispatch();
+export default function LoginModal({ onClose }) {
   const [showPassword, setShowPassword] = useState(false);
-  const [firebaseError, setFirebaseError] = useState(null);
+  const dispatch = useDispatch();
 
   const {
     register,
@@ -44,33 +42,10 @@ export default function RegisterModal({ onClose }) {
   }, []);
 
   const onSubmit = (data) => {
-    setFirebaseError(null);
-    dispatch(registerUser(data))
+    dispatch(loginUser(data))
       .unwrap()
       .then(() => onClose())
-      .catch((error) => {
-        const message =
-          typeof error === "string"
-            ? error
-            : error?.message || error?.error?.message || "Unknown error";
-
-        if (
-          message.includes("EMAIL_EXISTS") ||
-          message.includes("email-already-in-use")
-        ) {
-          setFirebaseError(
-            "This email is already registered. Try logging in instead."
-          );
-        } else if (message.includes("WEAK_PASSWORD")) {
-          setFirebaseError(
-            "Password is too weak. Please choose a stronger one."
-          );
-        } else {
-          setFirebaseError("Something went wrong. Please try again later.");
-        }
-
-        console.error("Registration error:", message);
-      });
+      .catch((error) => console.log(error));
   };
 
   return (
@@ -81,24 +56,13 @@ export default function RegisterModal({ onClose }) {
             <use href="/icons.svg#icon-x" />
           </svg>
         </button>
-        <h2 className={css.modalTitle}>Registration</h2>
+        <h2 className={css.modalTitle}>Log In</h2>
         <p className={css.modalSubtitle}>
-          Thank you for your interest in our platform! In order to register, we
-          need some information. Please provide us with the following
-          information
+          Welcome back! Please enter your credentials to access your account and
+          continue your search for an teacher.
         </p>
 
         <form onSubmit={handleSubmit(onSubmit)} className={css.form}>
-          <label>
-            <input
-              type="text"
-              {...register("name")}
-              placeholder="Name"
-              className={css.formInput}
-            />
-            {errors.name && <p className={css.error}>{errors.name.message}</p>}
-          </label>
-
           <label>
             <input
               type="email"
@@ -109,7 +73,6 @@ export default function RegisterModal({ onClose }) {
             {errors.email && (
               <p className={css.error}>{errors.email.message}</p>
             )}
-            {firebaseError && <p className={css.error}>{firebaseError}</p>}
           </label>
 
           <label className={css.pwdWraper}>
@@ -135,7 +98,7 @@ export default function RegisterModal({ onClose }) {
           </label>
 
           <button type="submit" className={css.formBtn}>
-            Sign Up
+            Log in
           </button>
         </form>
       </div>
