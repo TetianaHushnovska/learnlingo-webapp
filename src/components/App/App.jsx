@@ -1,4 +1,4 @@
-import { Route, Routes } from "react-router-dom";
+import { Route, Routes, useLocation } from "react-router-dom";
 import HomePage from "../../pages/HomePage/HomePage";
 import "./App.css";
 import { useEffect, useState } from "react";
@@ -7,15 +7,27 @@ import RegisterModal from "../RegisterModal/RegisterModal";
 import { useDispatch } from "react-redux";
 import { observeUser } from "../../redux/auth/operations";
 import LoginModal from "../LoginModal/LoginModal";
+import TeachersPage from "../../pages/TeachersPage/TeachersPage";
 
 function App() {
   const [showRegister, setShowRegister] = useState(false);
   const [showLogin, setShowLogin] = useState(false);
   const dispatch = useDispatch();
+  const location = useLocation();
 
   useEffect(() => {
     dispatch(observeUser());
   }, [dispatch]);
+
+  useEffect(() => {
+    if (location.pathname === "/") {
+      document.body.classList.add("white-bg");
+      document.body.classList.remove("gray-bg");
+    } else {
+      document.body.classList.add("gray-bg");
+      document.body.classList.remove("white-bg");
+    }
+  }, [location]);
 
   return (
     <>
@@ -27,7 +39,7 @@ function App() {
       <main>
         <Routes>
           <Route path="/" element={<HomePage />} />
-          {/* <Route path="/teachers" element={<Teachers />} /> */}
+          <Route path="/teachers" element={<TeachersPage />} />
         </Routes>
       </main>
 
