@@ -25,6 +25,7 @@ export default function TeacherCard({ teacher }) {
         <div className={css.avatarWrap}>
           <div className={css.border}>
             <img src={avatar_url} alt={name} className={css.avatar} />
+            <div className={css.onlineMark}></div>
           </div>
         </div>
 
@@ -83,7 +84,12 @@ export default function TeacherCard({ teacher }) {
 
           <p className={css.infoLine}>
             <span className={css.description}>Conditions: </span>
-            {conditions}
+            {conditions.map((condition, index) => (
+              <span key={index}>
+                {condition}
+                {index < conditions.length - 1 && " "}
+              </span>
+            ))}
           </p>
 
           {!isExpanded && (
@@ -100,7 +106,7 @@ export default function TeacherCard({ teacher }) {
               <p className={css.experience}>{experience}</p>
               <ul>
                 {reviews.map((review, index) => (
-                  <li key={index}>
+                  <li key={index} style={{ marginBottom: "16px" }}>
                     <div className={css.reviews}>
                       <div>
                         <svg className={css.iconReview}>
@@ -131,6 +137,20 @@ export default function TeacherCard({ teacher }) {
                 ))}
               </ul>
             </>
+          )}
+
+          <ul className={css.levels}>
+            {levels.map((level, index) => (
+              <li key={index} className={css.levelItem}>
+                #{level}
+              </li>
+            ))}
+          </ul>
+
+          {isExpanded && (
+            <button type="button" className={css.trialBtn}>
+              Book trial lesson
+            </button>
           )}
         </div>
       </div>

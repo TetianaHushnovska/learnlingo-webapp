@@ -5,8 +5,10 @@ const teachersSlice = createSlice({
     name: "teachers",
     initialState: {
         items: [],
+        lastKey: null,
         loading: false,
         error: null,
+        hasMore: true,
     },
     extraReducers: (builder) => {
         builder
@@ -16,7 +18,15 @@ const teachersSlice = createSlice({
             })
             .addCase(getTeachers.fulfilled, (state, action) => {
                 state.loading = false;
-                state.items = action.payload;
+                const { teachers, lastKey } = action.payload;
+
+                if (teachers.length === 0) {
+                    state.hasMore = false;
+                }
+                else {
+                    state.items = [...state.items, ...teachers];
+                    state.lastKey = lastKey;
+                }
             })
             .addCase(getTeachers.rejected, (state, action) => {
                 state.loading = false;

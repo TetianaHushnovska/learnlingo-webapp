@@ -15,7 +15,7 @@ export default function Header({ onRegisterClick, onLoginClick }) {
     <header className={css.header}>
       <Link to="/" className={css.logo}>
         <img
-          src="/src/img/ukraine.png"
+          src="/img/ukraine.png"
           alt="Website logo"
           className={css.logoImg}
         />

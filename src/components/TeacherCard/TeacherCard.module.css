@@ -20,6 +20,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    position: relative;
 }
 
 .avatarWrap{
@@ -31,6 +32,17 @@
     height: 96px;
     border-radius: 50%;
     object-fit: cover;
+}
+
+.onlineMark{
+    width: 12px;
+    height: 12px;
+    background-color: #38CD3E;
+    border-radius: 50%;
+    border: 2px solid #fff;
+    position: absolute;
+    top: 13px;
+    right: 23px;
 }
 
 .mainInfo {
@@ -116,8 +128,7 @@
     margin-bottom: 8px;
 }
 
-.readMore,
-.readLess {
+.readMore{
     font-weight: 500;
     margin: 8px 0 32px 0;
     text-decoration: underline;
@@ -138,6 +149,7 @@
 .reviews{
     display: flex;
     gap: 12px;
+    margin-bottom: 16px;
 }
 
 .iconReview{
@@ -145,29 +157,39 @@
     height: 44px;
 }
 
-.reviewAvatar {
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
+.levels{
+    display: flex;
+    flex-direction: row;
+    gap: 8px;
 }
 
-.level {
-    display: inline-block;
-    background: #f4f4f4;
-    padding: 4px 10px;
-    border-radius: 10px;
-    margin-right: 6px;
-    font-size: 13px;
-    color: #333;
+.levels li:first-child{
+    background-color: #9FBAAE;
+    border: none;
+}
+
+.levelItem{
+    padding: 8px 12px;
+    border: 1px solid rgba(18, 20, 23, 0.2);
+    border-radius: 35px;
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 16px;
 }
 
 .trialBtn {
+    width: 232px;
+    height: 60px;
     background: #9fbaae;
-    color: white;
     border: none;
-    padding: 10px 20px;
     border-radius: 12px;
-    font-weight: 600;
-    margin-top: 20px;
-    cursor: pointer;
+    font-weight: 700;
+    font-size: 18px;
+    line-height: 28px;
+    margin-top: 32px;
+    transition: background-color 0.3s ease-in-out;
+}
+
+.trialBtn:hover{
+    background-color: #CBDED3;
 }
