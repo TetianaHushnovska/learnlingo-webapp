@@ -19,6 +19,7 @@
     "react-hook-form": "^7.64.0",
     "react-redux": "^9.2.0",
     "react-router-dom": "^7.9.3",
+    "react-spinners": "^0.17.0",
     "yup": "^1.7.1"
   },
   "devDependencies": {

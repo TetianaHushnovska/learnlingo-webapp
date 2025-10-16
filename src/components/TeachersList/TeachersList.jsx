@@ -3,6 +3,8 @@ import css from "./TeachersList.module.css";
 import { useEffect, useRef } from "react";
 import { getTeachers } from "../../redux/teachers/operations";
 import TeacherCard from "../TeacherCard/TeacherCard";
+import Button from "../Button/Button";
+import Loader from "../Loader/Loader";
 
 export default function TeachersList() {
   const dispatch = useDispatch();
@@ -25,16 +27,27 @@ export default function TeachersList() {
     }
   };
 
-  if (loading) return <p>Loading...</p>;
+  if (loading) return <Loader />;
   if (error) return <p>Error: {error}</p>;
 
   return (
-    <ul className={css.list}>
-      {items.map((teacher, index) => (
-        <li key={index}>
-          <TeacherCard teacher={teacher} />
-        </li>
-      ))}
-    </ul>
+    <div>
+      <ul className={css.list}>
+        {items.map((teacher, index) => (
+          <li key={index}>
+            <TeacherCard teacher={teacher} />
+          </li>
+        ))}
+      </ul>
+      {hasMore && !loading && (
+        <Button
+          text="Load more"
+          onClick={handleLoadMore}
+          style={{ margin: "0 auto", display: "block" }}
+        />
+      )}
+
+      {loading && items.length > 0 && <Loader />}
+    </div>
   );
 }

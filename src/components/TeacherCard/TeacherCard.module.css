@@ -96,6 +96,12 @@
 .btnFav{
     width: 26px;
     height: 26px;
+    transition: all 0.3s ease-in-out;
+}
+
+.btnFav .iconFav:hover{
+    fill: #9FBAAE;
+    stroke: #9FBAAE;
 }
 
 .iconFav{
