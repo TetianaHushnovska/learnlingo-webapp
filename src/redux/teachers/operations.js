@@ -3,33 +3,35 @@ import { database } from "../../firebase/firebase"
 import { createAsyncThunk } from "@reduxjs/toolkit"
 
 export const getTeachers = createAsyncThunk(
-    'teachers/getAll',
-    async (lastKey = null, thunkAPI)=>{
-        try {
-            const teachersRef = ref(database, '/');
-            const teachersQuery = lastKey
-                ? query(teachersRef, orderByKey(), startAfter(lastKey), limitToFirst(4))
-                : query(teachersRef, orderByKey(), limitToFirst(4));
+  "teachers/getAll",
+  async (lastKey = null, thunkAPI) => {
+    try {
+      const teachersRef = ref(database, "/");
+      const limit = 4;
+      let queryRef;
 
-            const snapshot = await get(teachersQuery);
-            
-            if (snapshot.exists()) {
-                const data = snapshot.val();
-                const teachers = Object.entries(data).map(([id, value]) => ({
-                    id,
-                    ...value,
-                }));
+      if (lastKey) {
+        queryRef = query(teachersRef, orderByKey(), startAfter(lastKey), limitToFirst(limit));
+      } else {
+        queryRef = query(teachersRef, orderByKey(), limitToFirst(limit));
+      }
 
-                const lastKeyFetched = teachers[teachers.length - 1].id;
+      const snapshot = await get(queryRef);
+      const data = snapshot.val();
 
-                 return { teachers: teachers, lastKey: lastKeyFetched };
-            }
-            else {
-                return  { teachers: [], lastKey: null };
-         }
+      if (!data) {
+        return { items: [], lastKey: null, hasMore: false };
+      }
+
+      const teachers = Object.values(data);
+      const keys = Object.keys(data);
+      const newLastKey = keys[keys.length - 1];
+
+      const hasMore = teachers.length === limit;
+
+      return { items: teachers, lastKey: newLastKey, hasMore };
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error.message);
     }
-    catch (error) {
-            return thunkAPI.rejectWithValue(error.message);
-    }
-    }
-)
+  }
+);

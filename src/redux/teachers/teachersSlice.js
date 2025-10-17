@@ -17,16 +17,17 @@ const teachersSlice = createSlice({
                 state.error = null;
             })
             .addCase(getTeachers.fulfilled, (state, action) => {
-                state.loading = false;
-                const { teachers, lastKey } = action.payload;
+                const { items = [], lastKey = null, hasMore = false } = action.payload || {};
 
-                if (teachers.length === 0) {
-                    state.hasMore = false;
-                }
-                else {
-                    state.items = [...state.items, ...teachers];
-                    state.lastKey = lastKey;
-                }
+                  if (state.items.length === 0) {
+                    state.items = items;
+                  } else {
+                    state.items = [...state.items, ...items];
+                  }
+              
+                  state.lastKey = lastKey;
+                  state.hasMore = hasMore;
+                  state.loading = false;
             })
             .addCase(getTeachers.rejected, (state, action) => {
                 state.loading = false;

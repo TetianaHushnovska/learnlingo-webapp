@@ -1,8 +1,18 @@
 import { useState } from "react";
 import css from "./TeacherCard.module.css";
+import { useDispatch, useSelector } from "react-redux";
+import iziToast from "izitoast";
+import { toggleFav } from "../../redux/favorite/favoriteSlice";
+import { ref, set } from "firebase/database";
+import { database } from "../../firebase/firebase";
 
 export default function TeacherCard({ teacher }) {
   const [isExpanded, setIsExpanded] = useState(false);
+  const dispatch = useDispatch();
+  const { user } = useSelector((state) => state.auth);
+  const favorites = useSelector(
+    (state) => state.favoriteTeachers.favoriteTeachers
+  );
 
   const {
     avatar_url,
@@ -18,6 +28,29 @@ export default function TeacherCard({ teacher }) {
     reviews,
     levels,
   } = teacher;
+
+  const teacherId = `${name}-${surname}`.toLowerCase().replace(/\s+/g, "-");
+  const isFavorite = favorites?.includes(teacherId);
+
+  const handleFav = async () => {
+    console.log("❤️ Clicked fav:", teacherId, favorites);
+    if (!user) {
+      iziToast.warning({
+        title: "Caution",
+        message: "Please log in to add favorites!",
+        position: "topRight",
+      });
+      return;
+    }
+
+    dispatch(toggleFav(teacherId));
+
+    const updateFav = isFavorite
+      ? favorites.filter((id) => id !== teacherId)
+      : [...favorites, teacherId];
+
+    await set(ref(database, `users/${user.uid}/favorites`), updateFav);
+  };
 
   return (
     <div className={css.card}>
@@ -56,7 +89,11 @@ export default function TeacherCard({ teacher }) {
                 <span className={css.price}>{price_per_hour}$</span>
               </p>
             </div>
-            <button type="button" className={css.btnFav}>
+            <button
+              type="button"
+              className={`${css.btnFav} ${isFavorite ? css.active : ""}`}
+              onClick={handleFav}
+            >
               <svg className={css.iconFav}>
                 <use href="/icons.svg#icon-heart" />
               </svg>
