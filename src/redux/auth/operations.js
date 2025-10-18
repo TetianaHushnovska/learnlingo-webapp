@@ -22,7 +22,14 @@ export const loginUser = createAsyncThunk(
     async ({ email, password }, { rejectWithValue }) => {
         try {
             const userCredentials = await signInWithEmailAndPassword(auth, email, password);
-            return userCredentials.user;
+            const user = userCredentials.user;
+
+            return {
+                uid: user.uid,
+                email: user.email,
+                displayName: user.displayName || "",
+                photoURL: user.photoURL || "",
+            }
         }
         catch (error) {
             return rejectWithValue(error.message);
@@ -52,7 +59,12 @@ export const observeUser = createAsyncThunk(
         try {
             return new Promise((resolve) => {
                 onAuthStateChanged(auth, (user) => {
-                    resolve(user || null);
+                    resolve({
+                        uid: user.uid,
+                        email: user.email,
+                        displayName: user.displayName || "",
+                        photoURL: user.photoURL || "",
+                    });
                 });
             });
         }

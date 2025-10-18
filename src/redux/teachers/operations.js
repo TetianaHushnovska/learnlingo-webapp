@@ -7,27 +7,25 @@ export const getTeachers = createAsyncThunk(
   async (lastKey = null, thunkAPI) => {
     try {
       const teachersRef = ref(database, "/");
-      const limit = 4;
-      let queryRef;
 
-      if (lastKey) {
-        queryRef = query(teachersRef, orderByKey(), startAfter(lastKey), limitToFirst(limit));
-      } else {
-        queryRef = query(teachersRef, orderByKey(), limitToFirst(limit));
-      }
+      const teachersQuery = lastKey
+        ? query(teachersRef, orderByKey(), startAfter(lastKey), limitToFirst(4))
+        : query(teachersRef, orderByKey(), limitToFirst(4));
 
-      const snapshot = await get(queryRef);
+      const snapshot = await get(teachersQuery);
       const data = snapshot.val();
 
       if (!data) {
         return { items: [], lastKey: null, hasMore: false };
       }
 
-      const teachers = Object.values(data);
-      const keys = Object.keys(data);
-      const newLastKey = keys[keys.length - 1];
+      const teachers = Object.entries(data).map(([id, teacher]) => ({
+        id,
+        ...teacher,
+      }))
 
-      const hasMore = teachers.length === limit;
+      const newLastKey = Object.keys(data).pop();
+      const hasMore = Object.keys(data).length ===4;
 
       return { items: teachers, lastKey: newLastKey, hasMore };
     } catch (error) {

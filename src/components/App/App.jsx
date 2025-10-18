@@ -4,20 +4,28 @@ import "./App.css";
 import { useEffect, useState } from "react";
 import Header from "../Header/Header";
 import RegisterModal from "../RegisterModal/RegisterModal";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { observeUser } from "../../redux/auth/operations";
 import LoginModal from "../LoginModal/LoginModal";
 import TeachersPage from "../../pages/TeachersPage/TeachersPage";
+import { fetchFavorites } from "../../redux/favorite/operations";
 
 function App() {
   const [showRegister, setShowRegister] = useState(false);
   const [showLogin, setShowLogin] = useState(false);
   const dispatch = useDispatch();
   const location = useLocation();
+  const user = useSelector((state) => state.auth.user);
 
   useEffect(() => {
     dispatch(observeUser());
   }, [dispatch]);
+
+  useEffect(() => {
+    if (user?.uid) {
+      dispatch(fetchFavorites(user.uid));
+    }
+  }, [dispatch, user]);
 
   useEffect(() => {
     if (location.pathname === "/") {

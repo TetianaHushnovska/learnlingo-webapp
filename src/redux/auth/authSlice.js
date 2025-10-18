@@ -52,8 +52,8 @@ const authSlice = createSlice({
 
             //Observe (check after page refresh)
             .addCase(observeUser.fulfilled, (state, action) => {
-                state.user = action.payload;
                 state.initialized = true;
+                state.user = action.payload;
         })
     }
 });

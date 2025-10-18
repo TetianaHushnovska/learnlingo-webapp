@@ -1,4 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { fetchFavorites } from "./operations";
 
 const initialState = {
     favoriteTeachers: [],
@@ -22,6 +23,15 @@ const favoriteTeachersSlice = createSlice({
         state.favoriteTeachers = action.payload;
     }
     },
+    extraReducers: builder => {
+        builder
+            .addCase(fetchFavorites.fulfilled, (state, action) => {
+                state.favoriteTeachers = action.payload;
+            })
+            .addCase(fetchFavorites.rejected, (state, action) => {
+            console.log("Failed to fetch favorites", action.payload)
+        })
+    }
 })
 
 export const { toggleFav, setFav } = favoriteTeachersSlice.actions;

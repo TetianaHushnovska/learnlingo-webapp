@@ -2,6 +2,7 @@ import { useState } from "react";
 import css from "./TeacherCard.module.css";
 import { useDispatch, useSelector } from "react-redux";
 import iziToast from "izitoast";
+import "izitoast/dist/css/iziToast.min.css";
 import { toggleFav } from "../../redux/favorite/favoriteSlice";
 import { ref, set } from "firebase/database";
 import { database } from "../../firebase/firebase";
@@ -29,11 +30,10 @@ export default function TeacherCard({ teacher }) {
     levels,
   } = teacher;
 
-  const teacherId = `${name}-${surname}`.toLowerCase().replace(/\s+/g, "-");
-  const isFavorite = favorites?.includes(teacherId);
+  const isFavorite = favorites?.includes(teacher.id);
 
   const handleFav = async () => {
-    console.log("❤️ Clicked fav:", teacherId, favorites);
+    // console.log("❤️ Clicked fav:", teacher.id, favorites);
     if (!user) {
       iziToast.warning({
         title: "Caution",
@@ -43,11 +43,11 @@ export default function TeacherCard({ teacher }) {
       return;
     }
 
-    dispatch(toggleFav(teacherId));
+    dispatch(toggleFav(teacher.id));
 
     const updateFav = isFavorite
-      ? favorites.filter((id) => id !== teacherId)
-      : [...favorites, teacherId];
+      ? favorites.filter((id) => id !== teacher.id)
+      : [...favorites, teacher.id];
 
     await set(ref(database, `users/${user.uid}/favorites`), updateFav);
   };
