@@ -29,6 +29,11 @@ export default function Header({ onRegisterClick, onLoginClick }) {
         <Link to="/teachers" className={css.navLink}>
           Teachers
         </Link>
+        {user && (
+          <Link to="/favorite" className={css.navLink}>
+            Favorite
+          </Link>
+        )}
       </nav>
 
       <div className={css.auth}>

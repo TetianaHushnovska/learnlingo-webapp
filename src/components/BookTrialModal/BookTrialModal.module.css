@@ -1,0 +1,179 @@
+.backdrop {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.4);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+    overflow-y: auto;
+    padding: 40px 16px;
+}
+
+.modal {
+    width: 600px;
+    background: #fff;
+    border-radius: 20px;
+    padding: 64px;
+    position: relative;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+    overflow-y: auto;
+   max-height: 90vh;
+}
+
+.modalBtn {
+    width: 32px;
+    height: 32px;
+    color: #121417;
+    position: absolute;
+    top: 20px;
+    right: 20px;
+}
+
+.icon {
+    width: 16px;
+    height: 16px;
+    fill: transparent;
+    stroke: currentColor;
+}
+
+.modalTitle {
+    font-size: 40px;
+    font-weight: 500;
+    line-height: 48px;
+    letter-spacing: -0.02em;
+    margin-bottom: 20px;
+}
+
+.modalSubtitle {
+    line-height: 22px;
+    opacity: 80%;
+    margin-bottom: 20px;
+}
+
+.teacherWrap{
+    width: 139px;
+    height: 44px;
+    display: flex;
+    flex-direction: row;
+    gap: 14px;
+    margin-bottom: 40px;
+}
+
+.teacherImg{
+    border-radius: 50%;
+}
+
+.teacherTitle{
+    font-size: 12px;
+    font-weight: 500;
+    line-height: 16px;
+    color: #8A8A89;
+    margin-bottom: 4px;
+}
+
+.teacherName{
+    font-weight: 500;
+    line-height: 24px;
+}
+
+.optionsWrap{
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 40px;
+}
+
+.optionsTitle{
+    font-size: 24px;
+    font-weight: 500;
+    line-height: 32px;
+    margin-bottom: 20px;
+}
+
+.reasonLabel {
+    position: relative;
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    gap: 8px;
+    line-height: 22px;
+    margin-bottom: 16px;
+    font-size: 16px;
+}
+
+.reasonInput {
+    appearance: none;
+    -webkit-appearance: none;
+    position: relative;
+    width: 20px;
+    height: 20px;
+    border: 2px solid #d1d1d1;
+    border-radius: 50%;
+    outline: none;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.reasonInput:checked {
+    border-color:#9FBAAE;
+}
+
+.reasonInput:checked::before {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 10px;
+    height: 10px;
+    background-color: #9FBAAE;
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.formInput {
+    width: 100%;
+    height: 54px;
+    outline: none;
+    border: 1px solid rgba(18, 20, 23, 0.1);
+    border-radius: 12px;
+    padding: 16px 18px;
+    line-height: 22px;
+    margin-bottom: 18px;
+}
+
+.formInput:placeholder-shown {
+    color: #121417;
+}
+
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+input[type="number"] {
+    -moz-appearance: textfield;
+}
+
+.error {
+    font-size: 10px;
+    color: rgb(247, 86, 86);
+    padding-left: 15px;
+    margin-top: -16px;
+}
+
+.formBtn {
+    width: 100%;
+    height: 60px;
+    background-color: #9FBAAE;
+    line-height: 60px;
+    border-radius: 12px;
+    font-size: 18px;
+    font-weight: 700;
+    transition: background-color 0.3s ease-in-out;
+    margin-top: 24px;
+}
+
+.formBtn:hover {
+    background-color: #CBDED3;
+}

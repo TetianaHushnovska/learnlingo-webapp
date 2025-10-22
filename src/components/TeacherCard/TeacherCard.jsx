@@ -7,7 +7,7 @@ import { toggleFav } from "../../redux/favorite/favoriteSlice";
 import { ref, set } from "firebase/database";
 import { database } from "../../firebase/firebase";
 
-export default function TeacherCard({ teacher }) {
+export default function TeacherCard({ teacher, onBookTrial }) {
   const [isExpanded, setIsExpanded] = useState(false);
   const dispatch = useDispatch();
   const { user } = useSelector((state) => state.auth);
@@ -185,7 +185,11 @@ export default function TeacherCard({ teacher }) {
           </ul>
 
           {isExpanded && (
-            <button type="button" className={css.trialBtn}>
+            <button
+              type="button"
+              className={css.trialBtn}
+              onClick={() => onBookTrial(teacher)}
+            >
               Book trial lesson
             </button>
           )}

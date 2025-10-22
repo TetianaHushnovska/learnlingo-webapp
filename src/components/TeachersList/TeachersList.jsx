@@ -1,16 +1,18 @@
 import { useDispatch, useSelector } from "react-redux";
 import css from "./TeachersList.module.css";
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { getTeachers } from "../../redux/teachers/operations";
 import TeacherCard from "../TeacherCard/TeacherCard";
 import Button from "../Button/Button";
 import Loader from "../Loader/Loader";
+import BookTrialModal from "../BookTrialModal/BookTrialModal";
 
 export default function TeachersList() {
   const dispatch = useDispatch();
   const { items, loading, error, lastKey, hasMore } = useSelector(
     (state) => state.teachers
   );
+  const [selectedTeacher, setSelectedTeacher] = useState(null);
 
   const hasFetched = useRef(false);
 
@@ -35,7 +37,7 @@ export default function TeachersList() {
       <ul className={css.list}>
         {items.map((teacher, index) => (
           <li key={index}>
-            <TeacherCard teacher={teacher} />
+            <TeacherCard teacher={teacher} onBookTrial={setSelectedTeacher} />
           </li>
         ))}
       </ul>
@@ -48,6 +50,13 @@ export default function TeachersList() {
       )}
 
       {loading && items.length > 0 && <Loader />}
+
+      {selectedTeacher && (
+        <BookTrialModal
+          teacher={selectedTeacher}
+          onClose={() => setSelectedTeacher(null)}
+        />
+      )}
     </div>
   );
 }

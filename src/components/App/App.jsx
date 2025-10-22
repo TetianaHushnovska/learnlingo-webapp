@@ -48,6 +48,7 @@ function App() {
         <Routes>
           <Route path="/" element={<HomePage />} />
           <Route path="/teachers" element={<TeachersPage />} />
+          {user && <Route path="/fovorite" />}
         </Routes>
       </main>
 
