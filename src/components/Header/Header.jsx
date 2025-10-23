@@ -30,8 +30,8 @@ export default function Header({ onRegisterClick, onLoginClick }) {
           Teachers
         </Link>
         {user && (
-          <Link to="/favorite" className={css.navLink}>
-            Favorite
+          <Link to="/favorites" className={css.navLink}>
+            Favorites
           </Link>
         )}
       </nav>

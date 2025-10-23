@@ -7,7 +7,7 @@ import Button from "../Button/Button";
 import Loader from "../Loader/Loader";
 import BookTrialModal from "../BookTrialModal/BookTrialModal";
 
-export default function TeachersList() {
+export default function TeachersList({ customItems }) {
   const dispatch = useDispatch();
   const { items, loading, error, lastKey, hasMore } = useSelector(
     (state) => state.teachers
@@ -17,17 +17,19 @@ export default function TeachersList() {
   const hasFetched = useRef(false);
 
   useEffect(() => {
-    if (!hasFetched.current) {
+    if (!hasFetched.current && !customItems) {
       dispatch(getTeachers());
       hasFetched.current = true;
     }
-  }, [dispatch]);
+  }, [dispatch, customItems]);
 
   const handleLoadMore = () => {
-    if (hasMore && !loading) {
+    if (hasMore && !loading && !customItems) {
       dispatch(getTeachers(lastKey));
     }
   };
+
+  const teachersToShow = customItems || items;
 
   if (loading) return <Loader />;
   if (error) return <p>Error: {error}</p>;
@@ -35,13 +37,13 @@ export default function TeachersList() {
   return (
     <div>
       <ul className={css.list}>
-        {items.map((teacher, index) => (
+        {teachersToShow.map((teacher, index) => (
           <li key={index}>
             <TeacherCard teacher={teacher} onBookTrial={setSelectedTeacher} />
           </li>
         ))}
       </ul>
-      {hasMore && !loading && (
+      {hasMore && !loading && !customItems && (
         <Button
           text="Load more"
           onClick={handleLoadMore}

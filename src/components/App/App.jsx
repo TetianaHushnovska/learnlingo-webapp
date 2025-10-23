@@ -9,6 +9,7 @@ import { observeUser } from "../../redux/auth/operations";
 import LoginModal from "../LoginModal/LoginModal";
 import TeachersPage from "../../pages/TeachersPage/TeachersPage";
 import { fetchFavorites } from "../../redux/favorite/operations";
+import FavoritesPage from "../../pages/FavoritesPage/FavoritesPage";
 
 function App() {
   const [showRegister, setShowRegister] = useState(false);
@@ -25,7 +26,7 @@ function App() {
     if (user?.uid) {
       dispatch(fetchFavorites(user.uid));
     }
-  }, [dispatch, user]);
+  }, [dispatch, user?.uid]);
 
   useEffect(() => {
     if (location.pathname === "/") {
@@ -48,7 +49,7 @@ function App() {
         <Routes>
           <Route path="/" element={<HomePage />} />
           <Route path="/teachers" element={<TeachersPage />} />
-          {user && <Route path="/fovorite" />}
+          {user && <Route path="/favorites" element={<FavoritesPage />} />}
         </Routes>
       </main>
 
