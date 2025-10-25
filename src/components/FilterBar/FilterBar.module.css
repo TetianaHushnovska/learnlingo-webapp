@@ -1,0 +1,17 @@
+.filter{
+    width: 584px;
+    height: 74px;
+    display: flex;
+    gap: 20px;
+    margin-bottom: 32px;
+}
+
+.label{
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 18px;
+    color: #8A8A89;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}

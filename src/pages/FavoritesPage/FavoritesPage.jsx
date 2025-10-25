@@ -6,6 +6,7 @@ import TeachersList from "../../components/TeachersList/TeachersList";
 import Loader from "../../components/Loader/Loader";
 import Button from "../../components/Button/Button";
 import css from "./FavoritesPage.module.css";
+import FilterBar from "../../components/FilterBar/FilterBar";
 
 export default function FavoritesPage() {
   const favoriteIds = useSelector(
@@ -63,6 +64,7 @@ export default function FavoritesPage() {
 
   return (
     <section className={css.section}>
+      <FilterBar />
       {visibleTeachers.length > 0 ? (
         <>
           <TeachersList customItems={visibleTeachers} />

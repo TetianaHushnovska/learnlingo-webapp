@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import css from "./Header.module.css";
 import { useDispatch, useSelector } from "react-redux";
 import { logoutUser } from "../../redux/auth/operations";
@@ -13,26 +13,41 @@ export default function Header({ onRegisterClick, onLoginClick }) {
 
   return (
     <header className={css.header}>
-      <Link to="/" className={css.logo}>
+      <NavLink to="/" className={css.logo}>
         <img
           src="/img/ukraine.png"
           alt="Website logo"
           className={css.logoImg}
         />
         <span className={css.logoText}>LearnLingo</span>
-      </Link>
+      </NavLink>
 
       <nav className={css.nav}>
-        <Link to="/" className={css.navLink}>
+        <NavLink
+          to="/"
+          className={({ isActive }) =>
+            `${css.navLink} ${isActive ? css.isActive : ""}`
+          }
+        >
           Home
-        </Link>
-        <Link to="/teachers" className={css.navLink}>
+        </NavLink>
+        <NavLink
+          to="/teachers"
+          className={({ isActive }) =>
+            `${css.navLink} ${isActive ? css.isActive : ""}`
+          }
+        >
           Teachers
-        </Link>
+        </NavLink>
         {user && (
-          <Link to="/favorites" className={css.navLink}>
+          <NavLink
+            to="/favorites"
+            className={({ isActive }) =>
+              `${css.navLink} ${isActive ? css.isActive : ""}`
+            }
+          >
             Favorites
-          </Link>
+          </NavLink>
         )}
       </nav>
 

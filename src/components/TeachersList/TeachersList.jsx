@@ -6,9 +6,11 @@ import TeacherCard from "../TeacherCard/TeacherCard";
 import Button from "../Button/Button";
 import Loader from "../Loader/Loader";
 import BookTrialModal from "../BookTrialModal/BookTrialModal";
+import { selectFilteredTeachers } from "../../redux/teachers/selectors";
 
 export default function TeachersList({ customItems }) {
   const dispatch = useDispatch();
+  const filteredTeachers = useSelector(selectFilteredTeachers);
   const { items, loading, error, lastKey, hasMore } = useSelector(
     (state) => state.teachers
   );
@@ -29,7 +31,7 @@ export default function TeachersList({ customItems }) {
     }
   };
 
-  const teachersToShow = customItems || items;
+  const teachersToShow = customItems || filteredTeachers;
 
   if (loading) return <Loader />;
   if (error) return <p>Error: {error}</p>;
