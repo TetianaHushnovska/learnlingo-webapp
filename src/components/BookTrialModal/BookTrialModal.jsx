@@ -2,9 +2,14 @@ import * as yup from "yup";
 import css from "./BookTrialModal.module.css";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { useEffect } from "react";
 import iziToast from "izitoast";
 import "izitoast/dist/css/iziToast.min.css";
+import { useSelector } from "react-redux";
+import {
+  useAutoCloseOnAuth,
+  useCloseOnEsc,
+  useLockBodyScroll,
+} from "../../utils";
 
 const schema = yup.object({
   reason: yup.string().required("Please select a reason"),
@@ -31,20 +36,11 @@ export default function BookTrialModal({ teacher, onClose }) {
     formState: { errors },
   } = useForm({ resolver: yupResolver(schema) });
 
-  useEffect(() => {
-    const handleEsc = (e) => {
-      if (e.key === "Escape") onClose();
-    };
-    window.addEventListener("keydown", handleEsc);
-    return () => window.removeEventListener("keydown", handleEsc);
-  }, [onClose]);
+  const { isAuthenticated } = useSelector((state) => state.auth);
 
-  useEffect(() => {
-    document.body.style.overflow = "hidden";
-    return () => {
-      document.body.style.overflow = "auto";
-    };
-  }, []);
+  useCloseOnEsc(onClose);
+  useLockBodyScroll();
+  useAutoCloseOnAuth(isAuthenticated, onClose);
 
   const onSubmit = (data) => {
     console.log("Form data:", data);

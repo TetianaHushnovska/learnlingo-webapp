@@ -5,7 +5,6 @@ export default function Dropdown({ options, value, onChange, placeholder }) {
   const [open, setOpen] = useState(false);
   const ref = useRef(null);
 
-  // Закриття при кліку поза
   useEffect(() => {
     const handleClickOutside = (e) => {
       if (ref.current && !ref.current.contains(e.target)) setOpen(false);

@@ -33,7 +33,6 @@ export default function TeacherCard({ teacher, onBookTrial }) {
   const isFavorite = favorites?.includes(teacher.id);
 
   const handleFav = async () => {
-    // console.log("❤️ Clicked fav:", teacher.id, favorites);
     if (!user) {
       iziToast.warning({
         title: "Caution",

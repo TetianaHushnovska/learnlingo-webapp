@@ -1,3 +1,10 @@
+export const stats = [
+    { number: "32,000+", label: "Experienced tutors" },
+    { number: "300,000+", label: "5-star tutor reviews" },
+    { number: "120+", label: "Subjects taught" },
+    { number: "200+", label: "Tutor nationalities" },
+  ];
+
 export const languages = [
   "French",
   "English",
@@ -6,6 +13,9 @@ export const languages = [
   "Polish",
   "Spanish",
   "Italian",
+  "Mandarin Chinese",
+  "Korean",
+  "Vietnamese",
 ];
 export const levels = [
   "A1 Beginner",
@@ -20,5 +30,5 @@ export const prices = [
   { label: "$0 - 20", value: "0-20" },
   { label: "$20 - 40", value: "20-40" },
   { label: "$40 - 60", value: "40-60" },
-  { label: "$60+", value: "60-999" },
+  { label: "$60+", value: "60+" },
 ];

@@ -2,31 +2,16 @@ import { createSelector } from "@reduxjs/toolkit";
 
 export const selectFilteredTeachers = createSelector(
   [
-    (state) => state.teachers.items,
     (state) => state.teachers.filters,
+    (state) => state.teachers.allTeachers,
+    (state) => state.teachers.filteredCount,
   ],
-  (items, filters) => {
+  (filters, allTeachers, count) => {
     const { language, level, price } = filters;
 
-    return items.filter((teacher) => {
-      // ✅ безпечна перевірка навіть якщо поля відсутні
-      const teacherLanguages = Array.isArray(teacher.languages)
-        ? teacher.languages
-        : teacher.language
-        ? [teacher.language]
-        : [];
-
-      const teacherLevels = Array.isArray(teacher.levels)
-        ? teacher.levels
-        : teacher.level
-        ? [teacher.level]
-        : [];
-
-      const matchesLanguage =
-        !language || teacherLanguages.includes(language);
-
-      const matchesLevel = !level || teacherLevels.includes(level);
-
+    const filtered = allTeachers.filter((teacher) => {
+      const matchesLanguage = !language || teacher.languages?.includes(language);
+      const matchesLevel = !level || teacher.levels?.includes(level);
       const matchesPrice =
         !price ||
         (() => {
@@ -38,5 +23,7 @@ export const selectFilteredTeachers = createSelector(
 
       return matchesLanguage && matchesLevel && matchesPrice;
     });
+
+    return filtered.slice(0, count); 
   }
 );

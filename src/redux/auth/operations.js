@@ -18,25 +18,46 @@ export const registerUser = createAsyncThunk(
 
 //Login for exixting user
 export const loginUser = createAsyncThunk(
-    'auth/loginUser',
-    async ({ email, password }, { rejectWithValue }) => {
-        try {
-            const userCredentials = await signInWithEmailAndPassword(auth, email, password);
-            const user = userCredentials.user;
+  "auth/loginUser",
+  async ({ email, password }, { rejectWithValue }) => {
+    try {
+      const userCredential = await signInWithEmailAndPassword(auth, email, password);
+      const user = userCredential.user;
 
-            return {
-                uid: user.uid,
-                email: user.email,
-                displayName: user.displayName || "",
-                photoURL: user.photoURL || "",
-            }
-        }
-        catch (error) {
-            return rejectWithValue(error.message);
-        }
+      return {
+        uid: user.uid,
+        email: user.email,
+        displayName: user.displayName || "",
+      };
+    } catch (error) {
+      let message = "Something went wrong. Please try again.";
+
+      switch (error.code) {
+        case "auth/invalid-email":
+          message = "Invalid email address.";
+          break;
+        case "auth/user-disabled":
+          message = "This user account has been disabled.";
+          break;
+        case "auth/user-not-found":
+          message = "User not found. Please check your email.";
+          break;
+        case "auth/wrong-password":
+          message = "Incorrect password. Please try again.";
+          break;
+        case "auth/invalid-credential":
+          message = "Invalid email or password.";
+          break;
+        default:
+          message = "Login failed. Please try again later.";
+          break;
+      }
+
+      return rejectWithValue(message);
     }
-
+  }
 );
+
 
 //User logout
 export const logoutUser = createAsyncThunk(

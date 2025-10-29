@@ -1,5 +1,5 @@
 .filter{
-    width: 584px;
+    min-width: 584px;
     height: 74px;
     display: flex;
     gap: 20px;
@@ -14,4 +14,20 @@
     display: flex;
     flex-direction: column;
     gap: 8px;
+}
+
+.btn{
+    height: 48px;
+    background-color: #9FBAAE;
+    width: 150px;
+    border-radius: 12px;
+    font-size: 18px;
+    font-weight: 500;
+    margin-top: 26px;
+    outline: none;
+    transition: background-color 0.3s ease-in-out ;
+}
+
+.btn:hover{
+    background-color: #CBDED3;
 }

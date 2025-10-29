@@ -2,7 +2,9 @@ import css from "./FilterBar.module.css";
 import Dropdown from "../Dropdown/Dropdown";
 import { languages, levels, prices } from "../../constants";
 import { useDispatch, useSelector } from "react-redux";
-import { setFilters } from "../../redux/teachers/teachersSlice";
+import { clearFilters, setFilters } from "../../redux/teachers/teachersSlice";
+import { useEffect } from "react";
+import { getAllTeachersOnce } from "../../redux/teachers/getAllTeachersOnce";
 
 export default function FilterBar() {
   const dispatch = useDispatch();
@@ -12,9 +14,13 @@ export default function FilterBar() {
     dispatch(setFilters({ [field]: value }));
   };
 
+  useEffect(() => {
+    if (filters.language || filters.level || filters.price) return;
+    dispatch(getAllTeachersOnce());
+  }, [dispatch]);
+
   return (
     <div className={css.filter}>
-      {/* Мова */}
       <div className={css.label} style={{ width: "221px" }}>
         <span>Languages</span>
         <Dropdown
@@ -24,8 +30,6 @@ export default function FilterBar() {
           placeholder="All languages"
         />
       </div>
-
-      {/* Рівні */}
       <div className={css.label} style={{ width: "198px" }}>
         <span>Level of knowledge</span>
         <Dropdown
@@ -35,8 +39,6 @@ export default function FilterBar() {
           placeholder="All levels"
         />
       </div>
-
-      {/* Ціни */}
       <div className={css.label} style={{ width: "124px" }}>
         <span>Price</span>
         <Dropdown
@@ -46,6 +48,14 @@ export default function FilterBar() {
           placeholder="All prices"
         />
       </div>
+
+      <button
+        type="button"
+        className={css.btn}
+        onClick={() => dispatch(clearFilters())}
+      >
+        Reset
+      </button>
     </div>
   );
 }

@@ -2,3 +2,10 @@
     width: 1184px;
     margin: 0 auto 64px;
 }
+
+.emptyState{
+    font-size: 22px;
+    font-weight: 500;
+    line-height: 35px;
+    text-align: center;
+}

@@ -1,13 +1,7 @@
+import { stats } from "../../constants";
 import css from "./HeroStats.module.css";
 
 export default function HeroStats() {
-  const stats = [
-    { number: "32,000+", label: "Experienced tutors" },
-    { number: "300,000+", label: "5-star tutor reviews" },
-    { number: "120+", label: "Subjects taught" },
-    { number: "200+", label: "Tutor nationalities" },
-  ];
-
   return (
     <div className={css.stats}>
       <svg className={css.statsBorder} xmlns="http://www.w3.org/2000/svg">

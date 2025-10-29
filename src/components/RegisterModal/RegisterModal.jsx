@@ -1,10 +1,15 @@
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import css from "./RegisterModal.module.css";
 import * as yup from "yup";
 import { registerUser } from "../../redux/auth/operations";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useForm } from "react-hook-form";
-import { useEffect, useState } from "react";
+import { useState } from "react";
+import {
+  useAutoCloseOnAuth,
+  useCloseOnEsc,
+  useLockBodyScroll,
+} from "../../utils";
 
 const schema = yup.object({
   name: yup.string().required("Name is required"),
@@ -28,20 +33,11 @@ export default function RegisterModal({ onClose }) {
     resolver: yupResolver(schema),
   });
 
-  useEffect(() => {
-    const handleEsc = (e) => {
-      if (e.key === "Escape") onClose();
-    };
-    window.addEventListener("keydown", handleEsc);
-    return () => window.removeEventListener("keydown", handleEsc);
-  }, [onClose]);
+  const { isAuthenticated } = useSelector((state) => state.auth);
 
-  useEffect(() => {
-    document.body.style.overflow = "hidden";
-    return () => {
-      document.body.style.overflow = "auto";
-    };
-  }, []);
+  useCloseOnEsc(onClose);
+  useLockBodyScroll();
+  useAutoCloseOnAuth(isAuthenticated, onClose);
 
   const onSubmit = (data) => {
     setFirebaseError(null);

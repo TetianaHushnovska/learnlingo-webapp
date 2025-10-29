@@ -105,3 +105,10 @@
     right: 18px;
     top: 20px;
 }
+
+.submitError{
+    font-size: 12px;
+    font-weight: 400;
+    color: rgb(247, 86, 86);
+    margin-top: -10px;
+}

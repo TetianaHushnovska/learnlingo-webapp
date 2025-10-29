@@ -1,13 +1,19 @@
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import css from "./LoginModal.module.css";
 import * as yup from "yup";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { loginUser } from "../../redux/auth/operations";
+import Loader from "../Loader/Loader";
+import {
+  useAutoCloseOnAuth,
+  useCloseOnEsc,
+  useLockBodyScroll,
+} from "../../utils";
 
 const schema = yup.object({
-  email: yup.string().email().required("Email is required"),
+  email: yup.string().email("Invalid email").required("Email is required"),
   password: yup
     .string()
     .min(6, "At least 6 characters")
@@ -15,37 +21,38 @@ const schema = yup.object({
 });
 
 export default function LoginModal({ onClose }) {
-  const [showPassword, setShowPassword] = useState(false);
   const dispatch = useDispatch();
+  const [showPassword, setShowPassword] = useState(false);
+  const [submitError, setSubmitError] = useState("");
+  const [loading, setLoading] = useState(false);
+
+  const { isAuthenticated } = useSelector((state) => state.auth);
+
+  useCloseOnEsc(onClose);
+  useLockBodyScroll();
+  useAutoCloseOnAuth(isAuthenticated, onClose);
 
   const {
     register,
     handleSubmit,
     formState: { errors },
+    reset,
   } = useForm({
     resolver: yupResolver(schema),
   });
 
-  useEffect(() => {
-    const handleEsc = (e) => {
-      if (e.key === "Escape") onClose();
-    };
-    window.addEventListener("keydown", handleEsc);
-    return () => window.removeEventListener("keydown", handleEsc);
-  }, [onClose]);
-
-  useEffect(() => {
-    document.body.style.overflow = "hidden";
-    return () => {
-      document.body.style.overflow = "auto";
-    };
-  }, []);
-
-  const onSubmit = (data) => {
-    dispatch(loginUser(data))
-      .unwrap()
-      .then(() => onClose())
-      .catch((error) => console.log(error));
+  const onSubmit = async (data) => {
+    setLoading(true);
+    setSubmitError("");
+    try {
+      await dispatch(loginUser(data)).unwrap();
+      reset();
+      onClose();
+    } catch (error) {
+      setSubmitError(error);
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -56,10 +63,11 @@ export default function LoginModal({ onClose }) {
             <use href="/icons.svg#icon-x" />
           </svg>
         </button>
+
         <h2 className={css.modalTitle}>Log In</h2>
         <p className={css.modalSubtitle}>
           Welcome back! Please enter your credentials to access your account and
-          continue your search for an teacher.
+          continue your search for a teacher.
         </p>
 
         <form onSubmit={handleSubmit(onSubmit)} className={css.form}>
@@ -78,18 +86,23 @@ export default function LoginModal({ onClose }) {
           <label className={css.pwdWraper}>
             <input
               type={showPassword ? "text" : "password"}
-              autoComplete="current-password"
               {...register("password")}
               placeholder="Password"
               className={css.formInput}
+              autoComplete="current-password"
             />
             <button
               type="button"
               onClick={() => setShowPassword(!showPassword)}
               className={css.showIcon}
+              aria-label="Toggle password visibility"
             >
               <svg className={css.icon}>
-                <use href="/icons.svg#icon-eye-off" />
+                <use
+                  href={`/icons.svg#${
+                    showPassword ? "icon-eye" : "icon-eye-off"
+                  }`}
+                />
               </svg>
             </button>
             {errors.password && (
@@ -97,8 +110,10 @@ export default function LoginModal({ onClose }) {
             )}
           </label>
 
-          <button type="submit" className={css.formBtn}>
-            Log in
+          {submitError && <p className={css.submitError}>{submitError}</p>}
+
+          <button type="submit" className={css.formBtn} disabled={loading}>
+            {loading ? <Loader size={20} /> : "Log in"}
           </button>
         </form>
       </div>
