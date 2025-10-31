@@ -59,7 +59,7 @@ function App() {
             <Route path="/" element={<HomePage />} />
             <Route path="/teachers" element={<TeachersPage />} />
             {user && <Route path="/favorites" element={<FavoritesPage />} />}
-            <Route path="*" element={<Navigate to="/" replace={true} />} />
+            {/* <Route path="*" element={<Navigate to="/" replace={true} />} /> */}
           </Routes>
         </Suspense>
       </main>

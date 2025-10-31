@@ -1,5 +1,7 @@
 .section{
+    width: 1440px;
     padding: 0 128px 96px 128px;
+    margin: 0 auto;
 }
 
 .empty{

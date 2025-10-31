@@ -1,5 +1,5 @@
 .filter{
-    min-width: 584px;
+    width: 584px;
     height: 74px;
     display: flex;
     gap: 20px;
